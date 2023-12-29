@@ -16,8 +16,8 @@ fn main() -> std::io::Result<()> {
 
     fs::create_dir_all(path)?;
 
-    if let Err(error) = grab(move |e| callback(e, &screen_dir)) {
-        println!("something went wrong")
+    if let Err(_err) = grab(move |e| callback(e, &screen_dir)) {
+        println!("something went wrong");
     }
 
     Ok(())

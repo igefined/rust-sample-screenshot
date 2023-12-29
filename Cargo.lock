@@ -759,15 +759,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "printscreen-script"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "rdev",
- "screenshots",
-]
-
-[[package]]
 name = "proc-macro2"
 version = "1.0.71"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -849,6 +840,15 @@ dependencies = [
  "libc",
  "winapi",
  "x11",
+]
+
+[[package]]
+name = "rust-sample-screenshot"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "rdev",
+ "screenshots",
 ]
 
 [[package]]

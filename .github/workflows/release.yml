@@ -1,7 +1,7 @@
 name: Release
 
 permissions:
-  contracts: write
+  contents: write
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - v[0-9]+.*
 
 jobs:
-  release:
+  create-release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,17 +18,27 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   upload-assets:
-    needs: release
+    needs: create-release
     strategy:
       matrix:
         include:
           - target: aarch64-apple-darwin
             os: macos-latest
-          - target: x86-64-unknown-linux-gnu
+          - target: x86_64-unknown-linux-gnu
             os: ubuntu-20.04
-          - target: x86-64-apple-darwin
+          - target: x86_64-apple-darwin
             os: macos-latest
+          - target: universal-apple-darwin
+            os: macos-latest
+          - target: x86_64-pc-windows-msvc
+            os: windows-latest
+          - target: i686-pc-windows-msvc
+            os: windows-latest
+          - target: aarch64-pc-windows-msvc
+            os: windows-latest
     runs-on: ${{ matrix.os }}
+    env:
+      ENABLE_RUNTIME_TESTS: false
     steps:
       - uses: actions/checkout@v4
       - name: Install musl-tools on Linux
@@ -39,6 +49,6 @@ jobs:
         if: contains(matrix.os, 'ubuntu')
       - uses: taiki-e/upload-rust-binary-action@v1
         with:
-          bin: igefined-screenshots
+          bin: rust-sample-screenshot
           target: ${{ matrix.target }}
           token: ${{ secrets.GITHUB_TOKEN }}
